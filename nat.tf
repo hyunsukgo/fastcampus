@@ -3,9 +3,8 @@ resource "aws_nat_gateway" "nat" {
   subnet_id     = aws_subnet.comento-public-c.id
 
   tags = {
-    Name = "Comento-NAT"
-    Env = "Comento"
-    Created = "20230619"
+    Name = "fastcampus-NAT"
+    Env = "fastcampus"
   }
 
   # To ensure proper ordering, it is recommended to add an explicit dependency
