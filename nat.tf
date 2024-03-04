@@ -17,3 +17,11 @@ resource "aws_eip" "nat" {
     Name = "fastcampus-eip"
   }
 }
+
+resource "aws_ecr_repository" "this" {
+  name                 = "thasdsadis"
+  image_tag_mutability = "MUTABLE"
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
