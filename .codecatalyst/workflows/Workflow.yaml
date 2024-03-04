@@ -59,3 +59,37 @@ Actions:
       StateTable: terraform-lock
     DependsOn:
       - Terraform_Plan
+  TFSEC:
+    # Identifies the action. Do not modify this value.
+    Identifier: aws/managed-test@v1.0.0
+    # Specifies the source and/or artifacts to pass to the action as input.
+    Inputs:
+      # Optional
+      Sources:
+        - WorkflowSource # This specifies that the action requires this Workflow as a source
+    Outputs:
+      # Optional; Automatically discover reports for popular test frameworks
+      AutoDiscoverReports:
+        Enabled: true
+        # Use as prefix for the report files
+        ReportNamePrefix: rpt
+      Reports:
+        tfsec_results:
+          Format: SARIFSCA
+          IncludePaths:
+            - reports/tfsec.sarif
+    # Defines the action's properties.
+    Configuration:
+      # Required - Steps are sequential instructions that run shell commands
+      Steps:
+        - Run: >-
+            echo "Installing tfsec"
+
+            wget https://github.com/aquasecurity/tfsec/releases/download/v1.28.1/tfsec-linux-amd64 -O tfsec
+
+            chmod +x ./tfsec
+        - Run: echo "Setup report folder"
+        - Run: mkdir reports
+        - Run: |-
+            echo "Run tfsec"
+            ./tfsec . --format sarif > ./reports/tfsec.sarif; true
