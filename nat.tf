@@ -18,7 +18,13 @@ resource "aws_eip" "nat" {
   }
 }
 
-resource "aws_apigatewayv2_stage" "bad_example" {
-  api_id = aws_apigatewayv2_api.example.id
-  name   = "example-stage"
-}
+
+ resource "aws_ecr_repository" "bad_example" {
+   name                 = "bar"
+   image_tag_mutability = "MUTABLE"
+
+   image_scanning_configuration {
+     scan_on_push = false
+   }
+ }
+
