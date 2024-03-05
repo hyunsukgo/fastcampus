@@ -19,12 +19,12 @@ resource "aws_eip" "nat" {
 }
 
 
- resource "aws_ecr_repository" "bad_example" {
-   name                 = "bar"
-   image_tag_mutability = "MUTABLE"
+resource "aws_ecr_repository" "bad_example" {
+  name                 = "bar"
+  image_tag_mutability = "MUTABLE"
 
-   image_scanning_configuration {
-     scan_on_push = false
-   }
- }
+  image_scanning_configuration {
+    scan_on_push = false
+  }
+}
 

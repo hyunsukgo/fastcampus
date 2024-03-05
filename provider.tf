@@ -5,7 +5,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket = "fastcampus-backend"
-    key = "tfstate/fastcampus"
+    key    = "tfstate/fastcampus"
     region = "us-east-1"
   }
 }
