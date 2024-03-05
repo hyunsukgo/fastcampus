@@ -18,6 +18,15 @@ resource "aws_eip" "nat" {
   }
 }
 
+resource "aws_s3_bucket" "bad_example" {
+  bucket = "mybucket"
+}
+
+resource "aws_s3_bucket_public_access_block" "bad_example" {
+  bucket = aws_s3_bucket.bad_example.id
+}
+
+
 
 resource "aws_ecr_repository" "bad_example" {
   name                 = "bar"
