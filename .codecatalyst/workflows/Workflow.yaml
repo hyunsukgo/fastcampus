@@ -75,6 +75,11 @@ Actions:
         ReportNamePrefix: rpt
         IncludePaths:
           - reports/reports/tfsec.sarif
+      Reports:
+        tfsec_report:
+          Format: SARIFSCA
+          IncludePaths:
+            - reports/tfsec.sarif
     # Defines the action's properties.
     Configuration:
       # Required - Steps are sequential instructions that run shell commands
