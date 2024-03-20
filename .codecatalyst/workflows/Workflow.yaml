@@ -37,3 +37,25 @@ Actions:
       StateBucket: fastcampus-backend
       StateKey: tfstate/init
       StateTable: terraform-lock
+  Terraform_Plan_dc:
+    Identifier: codecatalyst-labs/provision-with-terraform-community@v1.0.1
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-campus
+          Name: "883505381142"
+      Name: fastcampus
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Compute:
+      Type: EC2
+      Fleet: Linux.x86-64.Large
+    Configuration:
+      TerraformOperationMode: apply
+      TerraformVersion: 1.7.5
+      AWSRegion: us-east-1
+      StateBucket: fastcampus-backend
+      StateKey: tfstate/init
+      StateTable: terraform-lock
+    DependsOn:
+      - Terraform_Plan
