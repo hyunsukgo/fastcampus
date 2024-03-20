@@ -37,7 +37,7 @@ Actions:
       StateBucket: fastcampus-backend
       StateKey: tfstate/init
       StateTable: terraform-lock
-  Terraform_Plan_dc:
+  Terraform_Apply:
     Identifier: codecatalyst-labs/provision-with-terraform-community@v1.0.1
     Environment:
       Connections:
