@@ -32,7 +32,7 @@ Actions:
     Configuration:
       # Required; type: string; description: The Terraform operation mode, should one of test or plan or apply
       TerraformOperationMode: plan
-      TerraformVersion: 1.7.0
+      TerraformVersion: 1.7.5
       AWSRegion: us-east-1
       StateBucket: fastcampus-backend
       StateKey: tfstate/init
@@ -49,7 +49,7 @@ Actions:
         - WorkflowSource
     Compute:
       Type: EC2
-      Fleet: Linux.x86-64.Large
+      Fleet: Linux.Arm64.Large
     Configuration:
       TerraformOperationMode: apply
       TerraformVersion: 1.7.5
@@ -59,3 +59,39 @@ Actions:
       StateTable: terraform-lock
     DependsOn:
       - Terraform_Plan
+  TFSEC:
+    # Identifies the action. Do not modify this value.
+    Identifier: aws/managed-test@v1.0.0
+    # Specifies the source and/or artifacts to pass to the action as input.
+    Inputs:
+      # Optional
+      Sources:
+        - WorkflowSource # This specifies that the action requires this Workflow as a source
+    Outputs:
+      # Optional; Automatically discover reports for popular test frameworks
+      AutoDiscoverReports:
+        Enabled: true
+        # Use as prefix for the report files
+        ReportNamePrefix: rpt
+        IncludePaths:
+          - reports/reports/tfsec.sarif
+      Reports:
+        tfsec_report:
+          Format: SARIFSCA
+          IncludePaths:
+            - reports/tfsec.sarif
+    # Defines the action's properties.
+    Configuration:
+      # Required - Steps are sequential instructions that run shell commands
+      Steps:
+        - Run: >-
+            echo "Installing tfsec"
+
+            wget https://github.com/aquasecurity/tfsec/releases/download/v1.28.1/tfsec-linux-amd64 -O tfsec
+
+            chmod +x ./tfsec
+        - Run: echo "Setup report folder"
+        - Run: mkdir reports
+        - Run: |-
+            echo "Run tfsec"
+            ./tfsec . --format sarif > ./reports/tfsec.sarif; true
