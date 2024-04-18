@@ -13,6 +13,7 @@ resource "aws_subnet" "comento-public-c" {
   availability_zone = "ap-northeast-2c"
   tags = {
     Name = "Public-ELB-C"
+    ENV = var.env
   }
 }
 
